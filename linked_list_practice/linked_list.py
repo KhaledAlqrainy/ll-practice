@@ -38,24 +38,31 @@ class LinkedList:
             self.head = last
             return
         
-        last_node = self.head
+        itr = self.head
 
-        while last_node.next:
-            last_node = last_node.next
+        while itr.next:
+            itr = itr.next
 
-        last_node.next = last
+        itr.next = last
+    
+    def insert_values(self,list):
 
-    def insert_at(self,data,idx):
+        self.head = None
+        for i in list:
+            self.insert_at_last(i)
+
+
+    def insert_at(self,data,idx): 
 
         count = 0
 
         if idx ==0:
-            self.insert_at_first(data)
+            self.insert_at_last(data)
             return
 
         new_node = self.head
         while new_node:
-
+ 
             if count == idx-1:
                 new = Node(data,new_node.next)
                 new_node.next = new
@@ -80,7 +87,7 @@ class LinkedList:
     def length(self):
         count =0
         itr = self.head
-        while itr:
+        while itr: 
             count += 1
             itr = itr.next
         return count
@@ -91,7 +98,7 @@ class LinkedList:
 
         loop = self.head
         while loop :
-            if loop.next.data == value:
+            if loop.data == value:
                 new = Node(data1,loop.next)
                 loop.next = new
                 break
@@ -101,7 +108,7 @@ class LinkedList:
 
         itr = self.head
         while itr:
-            if itr.data == value:
+            if itr.next.data == value:
                 itr.next = itr.next.next
                 break
             itr = itr.next
@@ -162,27 +169,89 @@ class LinkedList:
             right -= 1
         return True
 
+    # def zipLists(first, second):
+    #     current1 = first.head
+    #     current2 = second.head
+    #     length1 = 0
+    #     length2 = 0
+    #     temp = {}
+    #     while(current1):
+    #         length1 += 1
+    #         current1 = current1.next
+    #     while(current2):
+    #         length2 += 1
+    #         current2 = current2.next
+    #         if length1 < length2:
+    #             temp =first
+    #             first = second
+    #             second =temp
+    #             current1 = first.head
+    #             current2 = second.head
+    #         while current1 and current2:
+    #             first_next = current1.next
+    #             second_next = current2.next
+    #             current2.next = first_next 
+    #             current1.next = current2 
+    #             current1 = first_next
+    #             current2 = second_next
+    #             second.head = current2
+    #     return f"{first}"
+    
+    def zipping(list1, list2):
+        item1 = list1.head
+        item2 = list2.head
+    
+        if not item1:
+            list1.head = list2.head
+            return list1.head
+        if not item2:
+            list2.head = list1.head
+            return list1.head
+        
+        pointer = item2.next
+    
+        while item1.next and item2.next:
+            item2.next = item1.next
+            item1.next= item2
+            item1 = item2.next
+            item2 = pointer
+            pointer = pointer.next
+    
+        if not item1.next:
+            item1.next = item2
+            return list1.head
 
+        if not item2.next:
+            item2.next = item1.next
+            item1.next = item2
+            return list1.head
+
+def fibonacci(n):
+    if n<=1:
+        return n
+    else:
+        return fibonacci(n-1) + fibonacci(n-2)
 
             
 
 
 if __name__ == '__main__':
     ll = LinkedList()
-    ll.insert_at_first(1)
-    ll.insert_at_first(2)
-    ll.insert_at_first(0)
-    ll.insert_at_first(2)
-    ll.insert_at_first(7)
-    # ll.insert_at("99",2)
+    ll.insert_at_last(0)
+    ll.insert_at_last(4)
+    ll.insert_at_last(3)
+    ll.insert_at_last(0)
+    # ll.insert_at_last(69)
+    # ll.insert_at("99",0)
     # ll.delete_at(2)
     # print(ll.length())
-    # ll.insert_after_value(2, "khaled")
-    # ll.remove_at_value(2)
+    # ll.insert_after_value(7, "khaled")
+    # ll.remove_at_value(7)
     # ll.reverse()
     ll.print()
     print(ll.palindrome())
     # print(ll.check(7))
+    # print(fibonacci(7))
 
 
 
